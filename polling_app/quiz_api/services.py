@@ -28,7 +28,7 @@ def check_if_quiz_exists(quiz_id: int):
     return quiz_id
 
 
-def check_if_user_exists(user_id):
+def check_if_user_exists(user_id: int):
     """Check if user exists."""
 
     if not User.objects.filter(pk=user_id):
@@ -69,7 +69,7 @@ def check_datatype_in_user_answers_quiz(data):
     return data
 
 
-def check_if_user_already_pass_quiz(user_id, quiz_id):
+def check_if_user_already_pass_quiz(user_id: int, quiz_id: int):
     """Check if user already pass quiz."""
 
     user_quiz_history = UserQuizHistory.objects.filter(
@@ -81,7 +81,7 @@ def check_if_user_already_pass_quiz(user_id, quiz_id):
     return user_id, quiz_id
 
 
-def check_if_choices_is_linked_with_quiz(data, quiz_id):
+def check_if_choices_is_linked_with_quiz(data, quiz_id: int):
     """Check if choice is linked with quiz."""
 
     quiz_questions = Question.objects.filter(
@@ -97,7 +97,7 @@ def check_if_choices_is_linked_with_quiz(data, quiz_id):
     return data
 
 
-def check_if_questions_type_rules_are_performed(data, quiz_id):  # noqa: C901
+def check_if_questions_type_rules_are_performed(data, quiz_id: int):  # noqa: C901
     """Check if question type rules are performed by user answers."""
 
     quiz_questions = Question.objects.filter(
@@ -193,7 +193,7 @@ def save_users_quiz_answers(user_id: int, quiz_id: int, data):
         element.save()
 
 
-def get_user_answers_on_quiz(user_id, quiz_id):
+def get_user_answers_on_quiz(user_id: int, quiz_id: int):
     """Get users answers on quiz."""
 
     user_id = check_if_user_exists(user_id)
