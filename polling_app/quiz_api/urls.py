@@ -1,20 +1,21 @@
+"""Urls routing."""
+
+
 from django.urls import path
 
 from .views import QuizzesView, QuizDetailedView, NewUserView, \
-    SaveUserQuizAnswers, UserQuizzesView, DetailedUserQuizView
+    UserQuizzesView, DetailedUserQuizView
 
 
 urlpatterns = [
-    path('quizzes/<str:group>',
+    path('quizzes',
          QuizzesView.as_view()),
-    path('quiz/<int:quiz_id>',
+    path('quizzes/<int:quiz_id>',
          QuizDetailedView.as_view()),
-    path('user/new',
+    path('users',
          NewUserView.as_view()),
-    path('user/<int:user_id>/save_answers',
-         SaveUserQuizAnswers.as_view()),
-    path('user/<int:user_id>/quizzes',
+    path('users/<int:user_id>/quizzes',
          UserQuizzesView.as_view()),
-    path('user/<int:user_id>/quiz/<int:quiz_id>',
+    path('users/<int:user_id>/quizzes/<int:quiz_id>',
          DetailedUserQuizView.as_view()),
 ]

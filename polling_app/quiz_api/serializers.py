@@ -1,10 +1,17 @@
+"""Serializers."""
+
+
 from rest_framework import serializers
 
 from .models import Quiz, Question, Choice, UserQuizHistory, UserChoiceHistory
 
 
 class ChoiceSerializer(serializers.ModelSerializer):
+    """Choice serializer."""
+
     class Meta:
+        """Meta class."""
+
         model = Choice
         fields = (
             'id',
@@ -13,9 +20,13 @@ class ChoiceSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
+    """Question serializer."""
+
     choices = ChoiceSerializer(many=True, read_only=True)
 
     class Meta:
+        """Meta class."""
+
         model = Question
         fields = (
             'id',
@@ -25,8 +36,12 @@ class QuestionSerializer(serializers.ModelSerializer):
         )
 
 
-class QuizzesSerializer(serializers.ModelSerializer):
+class QuizSerializer(serializers.ModelSerializer):
+    """Quizzes serializer."""
+
     class Meta:
+        """Meta class."""
+
         model = Quiz
         fields = (
             'id',
@@ -38,9 +53,13 @@ class QuizzesSerializer(serializers.ModelSerializer):
 
 
 class QuizDetailedSerializer(serializers.ModelSerializer):
+    """Detailed Quiz serializer."""
+
     questions = QuestionSerializer(many=True, read_only=True)
 
     class Meta:
+        """Meta class."""
+
         model = Quiz
         fields = (
             'id',
@@ -53,10 +72,14 @@ class QuizDetailedSerializer(serializers.ModelSerializer):
 
 
 class UserQuizzesSerializer(serializers.ModelSerializer):
+    """User-Quizzes serializer."""
+
     quiz_text = serializers.CharField(source='quiz.name')
     id = serializers.CharField(source='quiz.id')
 
     class Meta:
+        """Meta class."""
+
         model = UserQuizHistory
         fields = (
             'id',
@@ -65,11 +88,17 @@ class UserQuizzesSerializer(serializers.ModelSerializer):
 
 
 class DetailedUserQuizSerializer(serializers.ModelSerializer):
+    """Detailed User-Quiz serializer."""
+
     class Meta:
+        """Meta class."""
+
         model = UserChoiceHistory
         fields = '__all__'
 
     def to_representation(self, instance):
+        """Representation method."""
+
         quiz_id = instance[0].choice.question.quiz.id
         quiz_name = instance[0].choice.question.quiz.name
 

@@ -19,6 +19,7 @@ Package was created with poetry.
 % python3 -m venv .venv
 % poetry env use .venv/bin/python
 % make install
+% mv .example_env .env
 
   -- migrations and migrate
 % make migrations
@@ -51,32 +52,67 @@ Package was created with poetry.
 
 #### Quiz references
 _look for examples below_
-* Path: /api/quizzes/\<str:group>
-* Allowed method: GET
-* Description: group is keyword "all" or "active"
+1. Get all quizzes
+    * GET /api/quizzes
+    * Allowed method: GET
+    * Description: Get list of quizzes. Allow query params: _?group=all_ to get all quizzes 
+      or _?group=active_ to get active quizzes. Default: group is "active" 
+
+2. Get detailed quiz by id
+    * GET /api/quizzes/\<int:quiz_id>
+    * Allowed method: GET
+    * Description: Get detailed quiz by id
 
 #### User references
 _look for examples below_
 1. Create new user
-    * Path: /api/user/new
+    * Post /api/users
     * Allowed method: POST [type: application/json]
     * Description: create new user
+
 2. Get History of user quizzes
-    * Path /api/user/\<int:user_id>/quizzes
+    * GET /api/users/\<int:user_id>/quizzes
     * Allowed method: GET
     * Description: Get users's history of completed quizzes
-3. Get Detailed history for user
-    * Path: /api/user/\<int:user_id>/quiz/\<int:quiz_id>
+
+3. Get Detailed history of quiz for user
+    * GET /api/users/\<int:user_id>/quizzes/\<int:quiz_id>
     * Allowed method: GET
     * Description: Get user's detailed completed quiz
+
 4. Save user answers for quiz
-    * Path: /api/user/\<int:user_id>/save_answers
-    * Allowed method: POST
-    * Description: Save user's answers for quiz 
+    * POST /api/users/\<int:user_id>/quizzes/\<int:quiz_id>
+    * Description: Save user's answers for quiz
 
 ---
 ### Examples
-* Example: /api/quizzes/all:
+* GET /api/quizzes and /api/quizzes?group=active:
+```json
+HTTP 200 OK
+Allow: GET, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+
+{
+    "quizzes": [
+        {
+            "id": 1,
+            "name": "What is your best color?",
+            "date_start": "2021-05-13",
+            "date_end": "2021-05-24",
+            "description": "May be red?"
+        },
+        {
+            "id": 2,
+            "name": "Who is Mr. Chechill?",
+            "date_start": "2021-05-14",
+            "date_end": "2021-05-24",
+            "description": "Do you know?"
+        }
+    ]
+}
+```
+* GET /api/quizzes?group=all
 ```json
 HTTP 200 OK
 Allow: GET, HEAD, OPTIONS
@@ -116,7 +152,7 @@ Vary: Accept
     ]
 }
 ```
-* Example: /api/quizzes/active
+* GET /api/quizzes/1
 ```json
 HTTP 200 OK
 Allow: GET, HEAD, OPTIONS
@@ -124,25 +160,56 @@ Content-Type: application/json
 Vary: Accept
 
 {
-    "quizzes": [
+    "id": 1,
+    "name": "What is your best color?",
+    "date_start": "2021-05-13",
+    "date_end": "2021-05-24",
+    "description": "May be red?",
+    "questions": [
         {
             "id": 1,
-            "name": "What is your best color?",
-            "date_start": "2021-05-13",
-            "date_end": "2021-05-24",
-            "description": "May be red?"
+            "text": "Is it red?",
+            "type": 1,
+            "choices": [
+                {
+                    "id": 1,
+                    "text": "red"
+                },
+                {
+                    "id": 2,
+                    "text": "green"
+                }
+            ]
         },
         {
             "id": 2,
-            "name": "Who is Mr. Chechill?",
-            "date_start": "2021-05-14",
-            "date_end": "2021-05-24",
-            "description": "Do you know?"
+            "text": "Is it green?",
+            "type": 2,
+            "choices": [
+                {
+                    "id": 3,
+                    "text": "red"
+                },
+                {
+                    "id": 4,
+                    "text": "green"
+                }
+            ]
         }
     ]
 }
 ```
-* Example: /api/user/new
+```json
+HTTP 404 Not Found
+Allow: GET, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+
+{
+    "detail": "Quiz 23 doesn't exists"
+}
+```
+* POST /api/users
 ```json
 Post data example
 
@@ -161,7 +228,6 @@ Vary: Accept
     "user_id": 7
 }
 ```
-Errors:
 ```json
 HTTP 400 Bad Request
 Allow: POST, OPTIONS
@@ -169,10 +235,10 @@ Content-Type: application/json
 Vary: Accept
 
 {
-    "detail": "data must contains \"username\",but it contains ['1']"
+    "detail": "data must contains \"username\",but it contains ['wrong_key']"
 }
 ```
-* Example: /api/user/3/quizzes
+* GET /api/users/3/quizzes
 ```json
 HTTP 200 OK
 Allow: GET, HEAD, OPTIONS
@@ -192,47 +258,52 @@ Vary: Accept
     ]
 }
 ```
-* Example: /api/user/3/quiz/1
 ```json
-HTTP 200 OK
+HTTP 400 Bad Request
 Allow: GET, HEAD, OPTIONS
 Content-Type: application/json
 Vary: Accept
 
 {
+    "detail": "User 13 doesn't exists"
+}
+```
+* GET /api/users/3/quizzes/2
+```json
+HTTP 200 OK
+Allow: GET, POST, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+
+{
     "quiz": {
-        "id": 1,
-        "name": "What is your best color?",
+        "id": 2,
+        "name": "Who is Mr. Chechill?",
         "question": [
             {
-                "id": 1,
-                "text": "Is it red?",
+                "id": 3,
+                "text": "Do you know?",
                 "choices": [
                     {
-                        "id": 1,
-                        "text": "red",
+                        "id": 5,
+                        "text": "yes",
                         "answer": "0"
                     },
                     {
-                        "id": 2,
-                        "text": "green",
+                        "id": 6,
+                        "text": "no",
                         "answer": "1"
                     }
                 ]
             },
             {
-                "id": 2,
-                "text": "Is it green?",
+                "id": 4,
+                "text": "So?",
                 "choices": [
                     {
-                        "id": 3,
-                        "text": "red",
-                        "answer": "1"
-                    },
-                    {
-                        "id": 4,
-                        "text": "green",
-                        "answer": "0"
+                        "id": 7,
+                        "text": "placeholder",
+                        "answer": "Person"
                     }
                 ]
             }
@@ -240,23 +311,41 @@ Vary: Accept
     }
 }
 ```
-Errors:
 ```json
-HTTP 404 Not Found
-Allow: GET, HEAD, OPTIONS
+HTTP 400 Bad Request
+Allow: GET, POST, HEAD, OPTIONS
 Content-Type: application/json
 Vary: Accept
 
 {
-    "detail": "User 4 didn't complete quiz 1"
+    "detail": "User 3 didn't complete quiz 10"
 }
 ```
-* Example: /api/user/4/save_answers
+```json
+HTTP 400 Bad Request
+Allow: GET, POST, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+
+{
+    "detail": "User 100 doesn't exists"
+}
+```
+```json
+HTTP 400 Bad Request
+Allow: GET, POST, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+
+{
+    "detail": "Quiz 10 doesn't exists"
+}
+```
+* POST /api/users/7/quizzes/2
 ```json
 Post data example
 
 {
-  "quiz_id": 2,
   "answers": [
     {
       "choice_id": 5,
@@ -268,13 +357,13 @@ Post data example
     },
     {
       "choice_id": 7,
-      "value": "Person"}
+      "value": "British statesman and politician"}
   ]
 }
 ```
 ```json
 HTTP 200 OK
-Allow: POST, OPTIONS
+Allow: GET, POST, HEAD, OPTIONS
 Content-Type: application/json
 Vary: Accept
 
@@ -282,10 +371,19 @@ Vary: Accept
     "detail": "Quiz saved"
 }
 ```
-Errors:
 ```json
 HTTP 400 Bad Request
-Allow: POST, OPTIONS
+Allow: GET, POST, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+
+{
+    "detail": "User 7 already pass Quiz 2"
+}
+```
+```json
+HTTP 400 Bad Request
+Allow: GET, POST, HEAD, OPTIONS
 Content-Type: application/json
 Vary: Accept
 
@@ -295,47 +393,7 @@ Vary: Accept
 ```
 ```json
 HTTP 400 Bad Request
-Allow: POST, OPTIONS
-Content-Type: application/json
-Vary: Accept
-
-{
-    "detail": "data[\"answers\"] must be \"list\"but it type is <class 'int'>"
-}
-```
-```json
-HTTP 400 Bad Request
-Allow: POST, OPTIONS
-Content-Type: application/json
-Vary: Accept
-
-{
-    "detail": "Question ID 3 has only one answer"
-}
-```
-```json
-HTTP 400 Bad Request
-Allow: POST, OPTIONS
-Content-Type: application/json
-Vary: Accept
-
-{
-    "detail": "User ID not found"
-}
-```
-```json
-HTTP 400 Bad Request
-Allow: POST, OPTIONS
-Content-Type: application/json
-Vary: Accept
-
-{
-    "detail": "Quiz ID not found"
-}
-```
-```json
-HTTP 400 Bad Request
-Allow: POST, OPTIONS
+Allow: GET, POST, HEAD, OPTIONS
 Content-Type: application/json
 Vary: Accept
 
@@ -345,11 +403,21 @@ Vary: Accept
 ```
 ```json
 HTTP 400 Bad Request
-Allow: POST, OPTIONS
+Allow: GET, POST, HEAD, OPTIONS
 Content-Type: application/json
 Vary: Accept
 
 {
-    "detail": "User 4 already pass Quiz 2"
+    "detail": "data[\"answers\"] must be \"list\"but it type is <class 'int'>"
+}
+```
+```json
+HTTP 400 Bad Request
+Allow: GET, POST, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+
+{
+    "detail": "Question ID 3 has only one answer"
 }
 ```

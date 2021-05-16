@@ -1,3 +1,5 @@
+"""Admin panel."""
+
 from django.contrib import admin
 
 from .models import User, Quiz, Question, Choice, \
@@ -5,7 +7,11 @@ from .models import User, Quiz, Question, Choice, \
 
 
 class MyModelAdmin(admin.ModelAdmin):
+    """Custom admin model."""
+
     def get_readonly_fields(self, request, obj=None):
+        """Edit readonly fields."""
+
         if obj:
             return self.readonly_fields + ('date_start', )
         return self.readonly_fields
