@@ -12,3 +12,4 @@ coverage.xml
 db.sqlite3
 /polling_app/quiz_api/migrations/*
 !/polling_app/quiz_api/migrations/__init__.py
+.env
