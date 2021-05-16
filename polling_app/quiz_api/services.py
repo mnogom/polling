@@ -158,6 +158,7 @@ def save_new_user(data):
 
 def get_completed_quizzes_by_user(user_id: int):
     """Get set of completed quizzes by user."""
+    user_id = check_if_user_exists(user_id)
 
     return UserQuizHistory.objects.filter(user_id=user_id)
 

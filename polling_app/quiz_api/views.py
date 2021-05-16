@@ -10,8 +10,8 @@ from .serializers import QuizSerializer, QuizDetailedSerializer, \
 
 from .errors import QuizAPIKeyError, QuizAPIIndexError, QuizAPITypeError
 from .services import get_grouped_quizzes, get_quiz, save_new_user, \
-    get_completed_quizzes_by_user, check_if_user_exists, \
-    save_users_quiz_answers, get_user_answers_on_quiz
+    get_completed_quizzes_by_user, save_users_quiz_answers, \
+    get_user_answers_on_quiz
 
 
 class QuizzesView(APIView):
@@ -73,12 +73,11 @@ class UserQuizzesView(APIView):
         """Get method."""
 
         try:
-            check_if_user_exists(user_id)
+            quizzes = get_completed_quizzes_by_user(user_id)
         except QuizAPIIndexError as exception:
             return Response({'detail': str(exception)},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        quizzes = get_completed_quizzes_by_user(user_id)
         serializer = UserQuizzesSerializer(quizzes,
                                            many=True)
         return Response({'quizzes': serializer.data})
