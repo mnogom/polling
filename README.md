@@ -1,7 +1,8 @@
 # Polling API
 
 ---
-
+[![linter-check](https://github.com/mnogom/polling/actions/workflows/linter-check.yml/badge.svg)](https://github.com/mnogom/polling/actions/workflows/linter-check.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/363d7ad403484bcda165/maintainability)](https://codeclimate.com/github/mnogom/polling/maintainability)
 
 ---
 ### Installation
@@ -48,41 +49,41 @@ Package was created with poetry.
   1 - Single choice question, 
   2 - multiple choices questions, 
   3 - Text answer
-* TODO: make quiz adding interface easier
 
 #### Quiz references
 _look for examples below_
 1. Get all quizzes
     * GET /api/quizzes
-    * Allowed method: GET
     * Description: Get list of quizzes. Allow query params: _?group=all_ to get all quizzes 
       or _?group=active_ to get active quizzes. Default: group is "active" 
 
 2. Get detailed quiz by id
     * GET /api/quizzes/\<int:quiz_id>
-    * Allowed method: GET
     * Description: Get detailed quiz by id
 
 #### User references
 _look for examples below_
 1. Create new user
-    * Post /api/users
-    * Allowed method: POST [type: application/json]
+    * Post [type: application/json] /api/users
     * Description: create new user
 
-2. Get History of user quizzes
+2. Get history of user quizzes
     * GET /api/users/\<int:user_id>/quizzes
-    * Allowed method: GET
     * Description: Get users's history of completed quizzes
 
-3. Get Detailed history of quiz for user
+3. Get detailed history of quiz for user
     * GET /api/users/\<int:user_id>/quizzes/\<int:quiz_id>
-    * Allowed method: GET
     * Description: Get user's detailed completed quiz
 
 4. Save user answers for quiz
-    * POST /api/users/\<int:user_id>/quizzes/\<int:quiz_id>
+    * POST [type: application/json] /api/users/\<int:user_id>/quizzes/\<int:quiz_id>
     * Description: Save user's answers for quiz
+
+---
+### TODO
+1. Make quiz adding interface easier
+2. Add tests
+3. Client part
 
 ---
 ### Examples
