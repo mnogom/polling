@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "polling"
+version = "0.1.0"
+description = ""
+authors = ["Konstantin Freidlin <freidlinks@ya.ru>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "2.2.10"
+djangorestframework = "^3.12.4"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^3.9.2"
+gunicorn = "^20.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

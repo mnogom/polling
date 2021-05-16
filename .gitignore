@@ -1,0 +1,14 @@
+__pycache__
+.venv/
+dist/
+snippets
+.vscode
+.idea
+.DS_Store
+.github/.DS_Store
+.coverage
+coverage.xml
+*.pyc
+db.sqlite3
+/polling_app/quiz_api/migrations/*
+!/polling_app/quiz_api/migrations/__init__.py
