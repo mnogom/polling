@@ -6,7 +6,7 @@ from .models import User, Quiz, Question, Choice, \
     UserQuizHistory, UserChoiceHistory
 
 
-class MyModelAdmin(admin.ModelAdmin):
+class QuizModelAdmin(admin.ModelAdmin):
     """Custom admin model."""
 
     def get_readonly_fields(self, request, obj=None):
@@ -18,7 +18,7 @@ class MyModelAdmin(admin.ModelAdmin):
 
 
 admin.site.register(User)
-admin.site.register(Quiz, MyModelAdmin)
+admin.site.register(Quiz, QuizModelAdmin)
 admin.site.register(Question)
 admin.site.register(Choice)
 admin.site.register(UserQuizHistory)

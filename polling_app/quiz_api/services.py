@@ -8,13 +8,12 @@ from .errors import QuizAPIKeyError, QuizAPIIndexError, QuizAPITypeError
 import datetime
 
 
-QUIZ_GROUP = ('all', 'active')
-
-
 def validate_group_quiz(group: str):
-    """Check if group is 'active' or 'all'."""
+    """Check if group is approve."""
 
-    if group not in QUIZ_GROUP:
+    quiz_group = ('all', 'active')
+
+    if group not in quiz_group:
         raise QuizAPIKeyError(f'Group can be \'all\' or \'active\'. '
                               f'Your group is \'{group}\'')
     return group
@@ -39,7 +38,7 @@ def check_if_user_exists(user_id: int):
 def validate_username_data(data):
     """Check if data contains required information."""
 
-    if {'username'} != data.keys():
+    if set(data.keys()) != {'username'}:
         raise QuizAPIKeyError(f'data must contains "username",'
                               f'but it contains {list(data.keys())}')
     return data
@@ -53,8 +52,8 @@ def check_keys_in_user_answers_quiz(data):
         raise QuizAPIKeyError('Keys in data not full')
 
     required_keys = {'choice_id', 'value'}
-    for answers in data['answers']:
-        if set(answers.keys()) != required_keys:
+    for answer in data['answers']:
+        if set(answer.keys()) != required_keys:
             raise QuizAPIKeyError('Keys in data not full')
 
     return data
@@ -72,10 +71,11 @@ def check_datatype_in_user_answers_quiz(data):
 def check_if_user_already_pass_quiz(user_id: int, quiz_id: int):
     """Check if user already pass quiz."""
 
-    user_quiz_history = UserQuizHistory.objects.filter(
-        user_id=user_id)
-    quiz_history_ids = [element.quiz.id for element in user_quiz_history]
-    if quiz_id in quiz_history_ids:
+    user_quiz_history = UserQuizHistory.objects
+    user_quiz_history = user_quiz_history.filter(user_id=user_id)
+    user_quiz = user_quiz_history.filter(quiz_id=quiz_id)
+
+    if not user_quiz:
         raise QuizAPIKeyError(f'User {user_id} '
                               f'already pass Quiz {quiz_id}')
     return user_id, quiz_id
@@ -133,7 +133,7 @@ def get_grouped_quizzes(group: str):
     if group == 'all':
         quizzes = quizzes.all()
 
-    if group == 'active':
+    elif group == 'active':
         quizzes = quizzes.filter(date_start__lte=today)
         quizzes = quizzes.filter(date_end__gte=today)
 
@@ -174,8 +174,8 @@ def save_users_quiz_answers(user_id: int, quiz_id: int, data):
     data = check_if_choices_is_linked_with_quiz(data, quiz_id)
     data = check_if_questions_type_rules_are_performed(data, quiz_id)
 
-    choices_ids = [element['choice_id'] for element in data['answers']]
-    user_answers = [element['value'] for element in data['answers']]
+    choices_ids = [answer['choice_id'] for answer in data['answers']]
+    user_answers = [answer['value'] for answer in data['answers']]
 
     user_quiz_history = UserQuizHistory(user_id=user_id,
                                         quiz_id=quiz_id)
