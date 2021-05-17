@@ -16,6 +16,7 @@ from .services import get_grouped_quizzes, get_quiz, save_new_user, \
 
 class QuizzesView(APIView):
     """Quizzes view."""
+
     def get(self, request):
         """Get method."""
 

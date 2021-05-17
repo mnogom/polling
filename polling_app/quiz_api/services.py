@@ -97,7 +97,7 @@ def check_if_choices_is_linked_with_quiz(data, quiz_id: int):
     return data
 
 
-def check_if_questions_type_rules_are_performed(data, quiz_id: int):  # noqa: C901
+def check_if_questions_type_rules_are_performed(data, quiz_id: int):  # noqa: C901, E501
     """Check if question type rules are performed by user answers."""
 
     quiz_questions = Question.objects.filter(
@@ -158,8 +158,8 @@ def save_new_user(data):
 
 def get_completed_quizzes_by_user(user_id: int):
     """Get set of completed quizzes by user."""
-    user_id = check_if_user_exists(user_id)
 
+    user_id = check_if_user_exists(user_id)
     return UserQuizHistory.objects.filter(user_id=user_id)
 
 
@@ -173,8 +173,6 @@ def save_users_quiz_answers(user_id: int, quiz_id: int, data):
     data = check_keys_in_user_answers_quiz(data)
     data = check_if_choices_is_linked_with_quiz(data, quiz_id)
     data = check_if_questions_type_rules_are_performed(data, quiz_id)
-
-    print(user_id, quiz_id, data)
 
     choices_ids = [element['choice_id'] for element in data['answers']]
     user_answers = [element['value'] for element in data['answers']]
