@@ -2,22 +2,16 @@ install:
 	poetry install
 
 run:
-	poetry run python polling_app/manage.py runserver
-
-gunicorn-run:
-	source .venv/bin/activate ; \
-	cd polling_app ; \
-	gunicorn polling_app.wsgi ; \
+	poetry run python manage.py runserver
 
 django-shell:
-	cd polling_app ; \
-	poetry run python manage.py shell ; \
+	poetry run python manage.py shell
 
 migrations:
-	poetry run python polling_app/manage.py makemigrations
+	poetry run python manage.py makemigrations
 
 migrate:
-	poetry run python polling_app/manage.py migrate
+	poetry run python manage.py migrate
 
 lint:
 	poetry run flake8 polling_app
