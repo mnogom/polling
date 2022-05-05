@@ -3,7 +3,7 @@
 import datetime
 
 from django.db.models import Q
-from rest_framework.generics import (ListAPIView,
+from rest_framework.generics import (ListCreateAPIView,
                                      RetrieveUpdateDestroyAPIView)
 
 from .serializers import (QuizSimpleSerializer,
@@ -13,7 +13,7 @@ from .models import Quiz
 ACTIVE_GROUP = 'active'
 
 
-class QuizzesListView(ListAPIView):
+class QuizzesListView(ListCreateAPIView):
     serializer_class = QuizSimpleSerializer
     queryset = Quiz.objects.all()
 
