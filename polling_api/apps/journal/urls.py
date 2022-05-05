@@ -2,11 +2,11 @@
 
 from django.urls import path
 
-from .views import (QuizJournalQuizList,
-                    QuizJournalChoicesList)
+from .views import (JournalQuizList,
+                    JournalChoicesList)
 
 app_name = 'journal'
 urlpatterns = [
-    path('journal/quizzes/', QuizJournalQuizList.as_view(), name='quiz-list'),
-    path('journal/quizzes/<int:quiz_pk>/', QuizJournalChoicesList.as_view(), name='choices-list')
+    path('quizzes/', JournalQuizList.as_view(), name='quiz-list'),
+    path('quizzes/<int:quiz_pk>/', JournalChoicesList.as_view(), name='choices-list')
 ]

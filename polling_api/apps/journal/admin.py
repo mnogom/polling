@@ -1,19 +1,12 @@
 """Admin panel."""
 
 from django.contrib import admin
-from .models import (UserQuizJournal,
-                     UserChoiceJournal)
-
-
-class UserQuizJournalAdmin(admin.ModelAdmin):
-    pass
+from .models import UserChoiceJournal
 
 
 class UserChoiceJournalAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(UserQuizJournal,
-                    UserQuizJournalAdmin)
 admin.site.register(UserChoiceJournal,
                     UserChoiceJournalAdmin)

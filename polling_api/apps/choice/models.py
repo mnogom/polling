@@ -19,4 +19,4 @@ class Choice(models.Model):
         verbose_name_plural = 'Choices'
 
     def __str__(self):
-        return f'[{self.question}] - {self.text}'
+        return self.text

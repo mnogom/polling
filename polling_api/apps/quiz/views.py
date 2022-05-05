@@ -1,11 +1,13 @@
 """Views."""
+
 import datetime
 
-from rest_framework.views import APIView
+from django.db.models import Q
 from rest_framework.generics import (ListAPIView,
-                                     RetrieveAPIView)
+                                     RetrieveUpdateDestroyAPIView)
 
-from .serializers import QuizSimpleSerializer
+from .serializers import (QuizSimpleSerializer,
+                          QuizExtendedSerializer)
 from .models import Quiz
 
 ACTIVE_GROUP = 'active'
@@ -17,13 +19,15 @@ class QuizzesListView(ListAPIView):
 
     def filter_queryset(self, queryset):
         if self.request.GET.get('group', ACTIVE_GROUP) == ACTIVE_GROUP:
-            queryset = queryset.filter(date_start__lte=datetime.date.today())
-            queryset = queryset.filter(date_end__gte=datetime.date.today())
+            today = datetime.date.today()
+            queryset = queryset.filter(
+                Q(date_start__lte=today) and Q(date_end__gte=today))
         return queryset.order_by('date_start')
 
 
-class QuizView(RetrieveAPIView):
-    serializer_class = QuizSimpleSerializer
+class QuizView(RetrieveUpdateDestroyAPIView):
+    http_method_names = ('get', 'patch', 'delete', 'head', 'options',)
+    serializer_class = QuizExtendedSerializer
     queryset = Quiz.objects.all()
     lookup_field = 'id'
     lookup_url_kwarg = 'quiz_pk'

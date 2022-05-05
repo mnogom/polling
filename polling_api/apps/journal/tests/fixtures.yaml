@@ -1,0 +1,48 @@
+- model: journal.UserQuizJournal
+  pk: 1
+  fields:
+    user: 1
+    quiz: 1
+
+- model: journal.UserChoiceJournal
+  pk: 1
+  fields:
+    user: 1
+    choice: 1
+
+- model: journal.UserChoiceJournal
+  pk: 2
+  fields:
+    user: 1
+    choice: 5
+
+- model: journal.UserChoiceJournal
+  pk: 3
+  fields:
+    user: 1
+    choice: 6
+
+- model: journal.UserChoiceJournal
+  pk: 4
+  fields:
+    user: 1
+    choice: 9
+    answer: "Nothing else"
+
+- model: journal.UserQuizJournal
+  pk: 2
+  fields:
+    user: 1
+    quiz: 2
+
+- model: journal.UserChoiceJournal
+  pk: 5
+  fields:
+    user: 1
+    choice: 10
+
+- model: journal.UserChoiceJournal
+  pk: 6
+  fields:
+    user: 1
+    choice: 17

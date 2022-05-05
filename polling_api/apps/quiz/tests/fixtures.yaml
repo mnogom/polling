@@ -1,0 +1,21 @@
+- model: quiz.Quiz
+  pk: 1
+  fields:
+    name: Backend stack
+    date_start: 2020-01-01
+    date_end: 2030-01-01
+
+- model: quiz.Quiz
+  pk: 2
+  fields:
+    name: Your favorites writers
+    date_start: 2020-01-01
+    date_end: 2030-01-01
+    description: Do you know them?
+
+- model: quiz.Quiz
+  pk: 3
+  fields:
+    name: Personal questions
+    date_start: 1990-01-01
+    date_end: 1993-01-01

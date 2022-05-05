@@ -1,4 +1,7 @@
+"""Models."""
+
 from django.db import models
+import datetime
 
 
 class Quiz(models.Model):
@@ -25,7 +28,9 @@ class Quiz(models.Model):
                                     'blank': 'Date end is not set up.',
                                     'null': 'Date end is not set up.',
                                 })
-    description = models.CharField(max_length=300)
+    description = models.CharField(max_length=300,
+                                   blank=True,
+                                   null=True)
 
     class Meta:
         verbose_name_plural = 'Quizzes'

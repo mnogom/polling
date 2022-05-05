@@ -1,0 +1,34 @@
+- model: question.Question
+  pk: 1
+  fields:
+    quiz: 1
+    text: What is your main language?
+    type: 1
+
+- model: question.Question
+  pk: 2
+  fields:
+    quiz: 1
+    text: What framework you use for python backend
+    type: 2
+
+- model: question.Question
+  pk: 3
+  fields:
+    quiz: 1
+    text: What framework you use for other backend
+    type: 3
+
+- model: question.Question
+  pk: 4
+  fields:
+    quiz: 2
+    text: Favorite poet
+    type: 1
+
+- model: question.Question
+  pk: 5
+  fields:
+    quiz: 2
+    text: Favorite writer
+    type: 1

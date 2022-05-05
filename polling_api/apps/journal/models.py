@@ -1,36 +1,36 @@
+"""Models."""
+
 from django.db import models
+
+
+class UserChoiceJournal(models.Model):
+    """User-Choice journal model."""
+
+    user = models.ForeignKey('user.User',
+                             related_name='user_choices',
+                             on_delete=models.CASCADE)
+    choice = models.ForeignKey('choice.Choice',
+                               related_name='user_journal',
+                               on_delete=models.CASCADE,
+                               null=True,
+                               blank=False)
+    answer = models.CharField(max_length=300,
+                              null=True,
+                              blank=False)
+
+    class Meta:
+        verbose_name_plural = 'User choices journal'
+
+    def __str__(self):
+        return f'{self.choice} : {self.answer} @ {self.user}'
 
 
 class UserQuizJournal(models.Model):
     """User-Quiz journal model."""
 
     user = models.ForeignKey('user.User',
-                             related_name='users',
+                             related_name='user_quizzes',
                              on_delete=models.CASCADE)
     quiz = models.ForeignKey('quiz.Quiz',
-                             related_name='quiz',
+                             related_name='user_journal',
                              on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name_plural = 'User-Quizzes journal'
-
-    def __str__(self):
-        return f'"{self.quiz}" @ "{self.user}"'
-
-
-class UserChoiceJournal(models.Model):
-    """User-Choice journal model"""
-
-    user = models.ForeignKey('user.User',
-                             related_name='user',
-                             on_delete=models.CASCADE)
-    choice = models.ForeignKey('choice.Choice',
-                               related_name='choice',
-                               on_delete=models.CASCADE)
-    answer = models.CharField(max_length=300)
-
-    class Meta:
-        verbose_name_plural = 'User-Choices journal'
-
-    def __str__(self):
-        return f'{self.choice} : {self.answer} @ {self.user}'

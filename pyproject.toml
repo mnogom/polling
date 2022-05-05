@@ -9,6 +9,9 @@ python = "^3.9"
 Django = "2.2.10"
 djangorestframework = "^3.12.4"
 environs = "^9.5.0"
+drf-writable-nested = "^0.6.3"
+PyYAML = "^6.0"
+django-cors-headers = "^3.11.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.2"

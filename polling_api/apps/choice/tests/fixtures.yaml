@@ -1,0 +1,102 @@
+- model: choice.Choice
+  pk: 1
+  fields:
+    question: 1
+    text: JavaScript
+
+- model: choice.Choice
+  pk: 2
+  fields:
+    question: 1
+    text: Java
+
+- model: choice.Choice
+  pk: 3
+  fields:
+    question: 1
+    text: Python
+
+- model: choice.Choice
+  pk: 4
+  fields:
+    question: 1
+    text: Ruby
+
+- model: choice.Choice
+  pk: 5
+  fields:
+    question: 2
+    text: Django
+
+- model: choice.Choice
+  pk: 6
+  fields:
+    question: 2
+    text: Flask
+
+- model: choice.Choice
+  pk: 7
+  fields:
+    question: 2
+    text: FastAPI
+
+- model: choice.Choice
+  pk: 8
+  fields:
+    question: 2
+    text: Another
+
+- model: choice.Choice
+  pk: 9
+  fields:
+    question: 3
+    text: Feel free to describe
+
+- model: choice.Choice
+  pk: 10
+  fields:
+    question: 4
+    text: Alexander Pushkin
+
+- model: choice.Choice
+  pk: 11
+  fields:
+    question: 4
+    text: Sergei Yesenin
+
+- model: choice.Choice
+  pk: 12
+  fields:
+    question: 4
+    text: Joseph Brodsky
+
+
+- model: choice.Choice
+  pk: 13
+  fields:
+    question: 4
+    text: Nikolai Gumilev
+
+- model: choice.Choice
+  pk: 14
+  fields:
+    question: 5
+    text: Fyodor Dostoevsky
+
+- model: choice.Choice
+  pk: 15
+  fields:
+    question: 5
+    text: Mikhail Bulgakov
+
+- model: choice.Choice
+  pk: 16
+  fields:
+    question: 5
+    text: Leo Tolstoy
+
+- model: choice.Choice
+  pk: 17
+  fields:
+    question: 5
+    text: Ivan Turgenev
